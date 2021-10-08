@@ -23,6 +23,8 @@ services:
             - POSTGRES_DB=web_db
         volumes:
             - db-web-data:/var/lib/postgresql/data/
+        ports:
+            - "5432:5432"
         networks:
             - web-internal
     
