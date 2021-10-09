@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    keycloak_id = models.CharField(max_length=200)
+    keycloak_id = models.CharField(max_length=200, primary_key=True)
     name = models.CharField(max_length=15)
 
 class Folder(models.Model):
@@ -10,15 +10,10 @@ class Folder(models.Model):
 
 class UserInFolder(models.Model):
     class Meta:
-        unique_together = (('user', 'Folder'),)
-    ROLES = (
-        (0, 'Owner'),
-        (1, 'Editor'),
-        (2, 'Guest'),
-    )
+        unique_together = (('user', 'folder'),)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    Folder = models.ForeignKey(Folder, on_delete=models.CASCADE, null=True)
-    role = models.IntegerField(choices=ROLES)
+    folder = models.ForeignKey(Folder, on_delete=models.CASCADE, null=True)
+    role = models.IntegerField()
 
 class File(models.Model):
     name = models.CharField(max_length=20)
