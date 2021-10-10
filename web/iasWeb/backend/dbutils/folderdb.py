@@ -1,4 +1,5 @@
 from backend.models import Folder
+from backend.dbutils import filedb
 
 def get(id):
     folderList = Folder.objects.filter(id=id)
@@ -27,6 +28,16 @@ def edit(id,name):
     else:
         raise ValueError("Folder does not exist")
 
+def addFile(id,name):
+    folderList = Folder.objects.filter(id=id)
+    if len(folderList) == 1:
+        folder = folderList[0]
+        file = filedb.add(name)
+        folder.file_set.add(file)
+        return file
+    else:
+        raise ValueError("Folder does not exist")
+
 def getFiles(id):
     folderList = Folder.objects.filter(id=id)
     if len(folderList) == 1:
@@ -34,4 +45,3 @@ def getFiles(id):
         return folder.file_set.all()
     else:
         raise ValueError("Folder does not exist")
-    

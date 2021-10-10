@@ -25,7 +25,8 @@ def edit(id,name):
     fileList = File.objects.filter(id=id)
     if len(fileList) == 1:
         fileList[0].name = name
-        fileList[0].update()
+        fileList[0].path = str(fileList[0].id)+name
+        fileList[0].save()
         return fileList[0]
     else:
         raise ValueError("File does not exist")

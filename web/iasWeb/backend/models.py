@@ -16,6 +16,6 @@ class UserInFolder(models.Model):
     role = models.IntegerField()
 
 class File(models.Model):
-    name = models.CharField(max_length=20)
-    path = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
+    path = models.CharField(max_length=100)
     directory = models.ForeignKey(Folder, on_delete=models.CASCADE, null=True)

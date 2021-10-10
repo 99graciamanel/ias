@@ -7,4 +7,6 @@ urlpatterns = [
     path('newFolder', views.newFolder),
     path('editFolder', views.editFolder),
     path('viewFolder', views.viewFolder),
+    path('newFile', views.newFile),
+    path('editFile', views.editFile),
 ]

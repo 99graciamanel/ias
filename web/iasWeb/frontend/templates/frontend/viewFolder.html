@@ -4,7 +4,12 @@
 <ul class="collection with-header">
     <li class="collection-header">
         <h4>Files of {{ folder.name }}</h4>
-        <a href="newFile" class="waves-effect waves-light btn"><i class="material-icons left">file_upload</i>New File</a>
+        <form method="GET" action="newFile">
+            <input name="id" value={{ folder.id }} type="hidden"/>
+            <button class="btn waves-effect waves-light" type="submit">New File
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
     </li>
     {% for file in files %}
     <li class="collection-item">
@@ -12,20 +17,23 @@
             {{ file.name }}
             {% if role < 2 %}
             <form method="GET" action="editFile" id="editForm{{ file.id }}" class="secondary-content">
-                <input name="id" value={{ file.id }} type="hidden"/>
+                <input name="idFile" value={{ file.id }} type="hidden"/>
+                <input name="idFolder" value={{ folder.id }} type="hidden"/>
                 <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('editForm{{ file.id }}').submit();">
                 <i class="material-icons">edit</i>
                 </a>
             </form>
-            <form method="POST" action="/backend/file/delete" id="deleteForm{{ file.id }}" class="secondary-content">{% csrf_token %}
-                <input name="id" value={{ file.id }} type="hidden"/>
+            <form method="POST" action="/backend/folder/deleteFile" id="deleteForm{{ file.id }}" class="secondary-content">{% csrf_token %}
+                <input name="idFile" value={{ file.id }} type="hidden"/>
+                <input name="idFolder" value={{ folder.id }} type="hidden"/>
                 <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('deleteForm{{ file.id }}').submit();">
                 <i class="material-icons">delete</i>
                 </a>
             </form>
             {% endif %}
-            <form method="GET" action="downloadFile" id="forwardForm{{ file.id }}" class="secondary-content">
-                <input name="id" value={{ file.id }} type="hidden"/>
+            <form method="GET" action="/backend/folder/getFile" id="forwardForm{{ file.id }}" class="secondary-content">
+                <input name="idFile" value={{ file.id }} type="hidden"/>
+                <input name="idFolder" value={{ folder.id }} type="hidden"/>
                 <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('forwardForm{{ file.id }}').submit();">
                 <i class="material-icons">file_download</i>
                 </a>
