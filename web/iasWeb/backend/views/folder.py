@@ -8,15 +8,13 @@ from backend.dbutils import filedb
 from django.http import FileResponse
 
 def addFolder(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     name = request.POST['name']
     userdb.createFolder(id,name)
     return HttpResponseRedirect('/')
 
 def deleteFolder(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.POST['id']
     role = userdb.getFolderRole(id,idFolder)
     if role == 0:
@@ -25,8 +23,7 @@ def deleteFolder(request):
     return Http404()
 
 def editFolder(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.POST['id']
     nameFolder = request.POST['name']
     role = userdb.getFolderRole(id,idFolder)
@@ -36,6 +33,13 @@ def editFolder(request):
     return Http404()
 
 def shareFolder(request):
+    role = 2
+    idFolder = request.POST['id']
+    nameFolder = request.POST['name']
+    role = userdb.getFolderRole(id,idFolder)
+    if role == 0:
+        folderdb.edit(idFolder,nameFolder)
+        return HttpResponseRedirect('/')
     return HttpResponse('Test')
 
 def unshareFolder(request):
@@ -45,8 +49,7 @@ def editshareFolder(request):
     return HttpResponse('Test')
 
 def addFile(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.POST['id']
     role = userdb.getFolderRole(id,idFolder)
     if role >= 2:
@@ -58,8 +61,7 @@ def addFile(request):
     return HttpResponse(fileDB.path)
 
 def getFile(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.GET['idFolder']
     idFile = request.GET['idFile']
     if not userdb.inFolder(id,idFolder):
@@ -71,8 +73,7 @@ def getFile(request):
     return response
 
 def deleteFile(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.POST['idFolder']
     idFile = request.POST['idFile']
     if userdb.getFolderRole(id,idFolder) >= 2:
@@ -84,8 +85,7 @@ def deleteFile(request):
     return HttpResponse(file.path)
 
 def editFile(request):
-    #Falta recollir ID
-    id = 0
+    id = request.user.id
     idFolder = request.POST['idFolder']
     idFile = request.POST['idFile']    
     if userdb.getFolderRole(id,idFolder) >= 2:
