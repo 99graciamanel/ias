@@ -42,7 +42,7 @@ OIDC_OP_AUTHORIZATION_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/
 OIDC_OP_TOKEN_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/token"
 OIDC_OP_USER_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/userinfo"
 
-OIDC_OP_LOGOUT_URL_METHOD = "openid.keycloak_logout"
+OIDC_OP_LOGOUT_URL_METHOD = "iasWeb.openid.keycloak_logout"
 OIDC_OP_LOGOUT_ENDPOINT = "http://localhost:8080/auth/realms/ias/protocol/openid-connect/logout"
 LOGIN_REDIRECT_URL = "https://localhost"
 LOGOUT_REDIRECT_URL = "https://localhost"
