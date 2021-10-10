@@ -56,3 +56,15 @@ def editFile(request):
     file = filedb.get(fileId)
     context = {'folder':folder,'file':file}
     return render(request, 'frontend/editFile.html',context)
+
+def shareFolder(request):
+    # Aqui fa falta recollir l'identificador de l'usuari
+    id = 0
+    folderId = request.GET['id']
+    folder = folderdb.get(folderId)
+    role = userdb.getFolderRole(id,folderId)
+    if role != 0:
+        return Http404()
+    users = folderdb.getUsers(folderId)
+    context = {'users':users,'folder':folder}
+    return render(request, 'frontend/shareFolder.html',context)

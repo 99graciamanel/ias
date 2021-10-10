@@ -45,3 +45,10 @@ def getFiles(id):
         return folder.file_set.all()
     else:
         raise ValueError("Folder does not exist")
+
+def getUsers(id):
+    folderList = Folder.objects.filter(id=id)
+    if len(folderList) == 1:
+        return folderList[0].userinfolder_set.all()
+    else:
+        raise ValueError("Folder does not exist")

@@ -9,4 +9,5 @@ urlpatterns = [
     path('viewFolder', views.viewFolder),
     path('newFile', views.newFile),
     path('editFile', views.editFile),
+    path('shareFolder', views.shareFolder),
 ]
