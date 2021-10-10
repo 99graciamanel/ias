@@ -16,7 +16,6 @@ services:
             - web-internal
         depends_on:
             - db-web
-
     db-web:
         image: "postgres:latest"
         environment:

@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'iasWeb.auth.KeycloakOIDCAuthenticationBackend',
 )
 
 MIDDLEWARE = [
