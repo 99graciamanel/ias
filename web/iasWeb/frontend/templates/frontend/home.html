@@ -1,6 +1,20 @@
 {% extends 'frontend/base.html' %}
 {% block content %}
 
+{% if user.is_authenticated %}
+  <p>Current user:</p>
+  <p>{{ user }}</p>
+  <p>{{ user.family_name }}</p>
+  <p>{{ user.email }}</p>
+  <p>{{ user.preferred_username }}</p>
+  <form action="{% url 'oidc_logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="logout">
+  </form>
+{% else %}
+  <a href="{% url 'oidc_authentication_init' %}">Login</a>
+{% endif %}
+
 <ul class="collection with-header">
     <li class="collection-header">
         <h4>Folders</h4>

@@ -7,7 +7,7 @@ from backend.dbutils import userdb,folderdb,filedb
 def index(request):
     # Aqui fa falta recollir l'identificador de l'usuari
     id = 0
-    context = {'folders':userdb.getFolders(id)} 
+    context = {'folders':userdb.getFolders(id)}
     return render(request,'frontend/home.html',context)
 
 def newFolder(request):

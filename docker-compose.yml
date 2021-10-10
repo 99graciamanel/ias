@@ -10,6 +10,8 @@ services:
             - POSTGRES_DB=web_db
             - POSTGRES_HOST=db-web
             - POSTGRES_PORT=5432
+        volumes:
+            -   ./web:/application
         networks:
             - web-internal
         depends_on:
@@ -30,16 +32,49 @@ services:
     nginx:
         build: ./nginx
         ports:
-            - 8080:8080
-            - 4343:4343
+            - 80:8080
+            - 443:4343
         networks:
             - web-internal
         depends_on:
             - web
-
-    
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - ./keycloak:/docker-entrypoint-initdb.d
+            - mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: keycloak
+            MYSQL_USER: keycloak
+            MYSQL_PASSWORD: password
+        ports:
+            - "3306:3306"
+        networks:
+            - web-internal
+    keycloak:
+        image: quay.io/keycloak/keycloak:latest
+        environment:
+            DB_VENDOR: MYSQL
+            DB_ADDR: mysql
+            DB_DATABASE: keycloak
+            DB_USER: keycloak
+            DB_PASSWORD: password
+            KEYCLOAK_USER: admin
+            KEYCLOAK_PASSWORD: admin
+            #KEYCLOAK_LOGLEVEL: DEBUG
+            # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
+            #JDBC_PARAMS: "connectTimeout=30000"
+        networks:
+            - web-internal
+        ports:
+            - 8080:8080
+        depends_on:
+            - mysql
 volumes: 
     db-web-data:
+    mysql_data:
+        driver: local
 
 networks:
     web-internal:

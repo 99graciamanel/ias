@@ -29,11 +29,30 @@ ALLOWED_HOSTS = []
 
 MEDIA_ROOT = 'files'
 
+OIDC_RP_SIGN_ALGO = "RS256"
+OIDC_RP_IDP_SIGN_KEY = """-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoptT3QonwbDUxzj+/pAk7JGBPq55cgOelTsZ82aUrWxJbIPhCW6vqCfXFkahpDd2PYQbmz6CJwtRJjzBoTWW7tjukgYVur3zIHRyKm/GUaE9/zRPqTCLY4IOyFWgfxkeNt8JtREHTB9D2BvrNxUEatTxleskgK8w/HT85lO2nbSgN7fFvABpdXBDMBInWnMlzfyOMuODslXKa1K87coJDgWFil7CAmrlGSbTfma8CZL2GimDqUcWi4RjGbahZJ7Bb/xXgj2T2hw0KzI6afJXYGvVUrG+m8RYrZKAWZQz3XjwzPmqH/x6INdEzEf0U9CYzAQF9PVfcZaT4++q7gB3hQIDAQAB
+-----END PUBLIC KEY-----"""
+OIDC_OP_JWKS_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/certs"
+
+OIDC_RP_CLIENT_ID = "django"
+OIDC_RP_CLIENT_SECRET = "1e236955-34a7-41d6-af06-af155d5fe251"
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/userinfo"
+
+OIDC_OP_LOGOUT_URL_METHOD = "openid.keycloak_logout"
+OIDC_OP_LOGOUT_ENDPOINT = "http://localhost:8080/auth/realms/ias/protocol/openid-connect/logout"
+LOGIN_REDIRECT_URL = "https://localhost"
+LOGOUT_REDIRECT_URL = "https://localhost"
+
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'mozilla_django_oidc',  # Load after auth
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,6 +60,10 @@ INSTALLED_APPS = [
     'backend.apps.BackendConfig',
     'frontend.apps.FrontendConfig',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh',
 ]
 
 ROOT_URLCONF = 'iasWeb.urls'
