@@ -17,7 +17,7 @@
                 <i class="material-icons">edit</i>
                 </a>
             </form>
-            <form method="GET" action="url3" id="shareForm{{ folder.folder.id }}" class="secondary-content">
+            <form method="GET" action="shareFolder" id="shareForm{{ folder.folder.id }}" class="secondary-content">
                 <input name="id" value={{ folder.folder.id }} type="hidden"/>
                 <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('shareForm{{ folder.folder.id }}').submit();">
                 <i class="material-icons">person</i>

@@ -53,4 +53,8 @@ def getFolderRole(keycloak_id,folder_id):
         raise ValueError("UserInFolder does not exist")
     return ufList[0].role
 
+def inFolder(keycloak_id,folder_id):
+    user = get(keycloak_id)
+    ufList = user.userinfolder_set.filter(folder_id=folder_id)
+    return len(ufList) == 1
 

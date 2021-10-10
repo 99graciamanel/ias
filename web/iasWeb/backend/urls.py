@@ -9,4 +9,8 @@ urlpatterns = [
     path('folder/share', views.shareFolder, name='shareFolder'),
     path('folder/unshare', views.unshareFolder, name='unshareFolder'),
     path('folder/editshare', views.editshareFolder, name='editshareFolder'),
+    path('folder/addFile', views.addFile, name='addFile'),
+    path('folder/getFile', views.getFile, name='getFile'),
+    path('folder/deleteFile', views.deleteFile, name='deleteFile'),
+    path('folder/editFile', views.editFile, name='editFile'),
 ]

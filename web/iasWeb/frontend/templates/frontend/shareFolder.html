@@ -1,0 +1,38 @@
+{% extends 'frontend/base.html' %}
+{% block content %}
+
+<ul class="collection with-header">
+    <li class="collection-header">
+        <h4>Users of {{ folder.name }}</h4>
+        <form method="GET" action="shareUser">
+            <input name="id" value={{ folder.id }} type="hidden"/>
+            <button class="btn waves-effect waves-light" type="submit">Add User
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </li>
+    {% for user in users %}
+    <li class="collection-item">
+        <div>
+            {{ user.user.name }}
+            {{ user.role }}
+
+            <form method="GET" action="editRole" id="editForm{{ file.id }}" class="secondary-content">
+                <input name="idFolder" value={{ folder.id }} type="hidden"/>
+                <input name="idUser" value={{ user.user.keycloak_id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('editForm{{ file.id }}').submit();">
+                <i class="material-icons">edit</i>
+                </a>
+            </form>
+            <form method="POST" action="/backend/folder/ushare" id="deleteForm{{ file.id }}" class="secondary-content">{% csrf_token %}
+                <input name="idFolder" value={{ folder.id }} type="hidden"/>
+                <input name="idUser" value={{ user.user.keycloak_id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('deleteForm{{ file.id }}').submit();">
+                <i class="material-icons">delete</i>
+                </a>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
