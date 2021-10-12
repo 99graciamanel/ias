@@ -46,7 +46,7 @@ OIDC_OP_LOGOUT_URL_METHOD = "iasWeb.openid.keycloak_logout"
 OIDC_OP_LOGOUT_ENDPOINT = "http://localhost:8080/auth/realms/ias/protocol/openid-connect/logout"
 LOGIN_REDIRECT_URL = "https://localhost"
 LOGOUT_REDIRECT_URL = "https://localhost"
-
+LOGIN_URL = 'https://localhost/oidc/authenticate'
 # Application definition
 
 INSTALLED_APPS = [
