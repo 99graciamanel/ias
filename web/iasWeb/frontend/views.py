@@ -2,6 +2,7 @@ from django.http.response import Http404, HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from backend.dbutils import userdb,folderdb,filedb
+from backend.dbutils import userinfolderdb
 
 # Create your views here.
 def index(request):
@@ -72,3 +73,15 @@ def shareUser(request):
         return Http404()
     context = {'folder':folder}
     return render(request, 'frontend/shareUser.html',context)
+
+def editShareUser(request):
+    id = request.user.id
+    folderId = request.GET['idFolder']
+    userFolderId = request.GET['idUserFolder']
+    folder = folderdb.get(folderId)
+    uf = userinfolderdb.get(userFolderId)
+    role = userdb.getFolderRole(id,folderId)
+    if role != 0:
+        return Http404()
+    context = {'folder':folder,'user':uf}
+    return render(request, 'frontend/editshareUser.html',context)

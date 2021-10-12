@@ -9,6 +9,13 @@ def get(id):
     else:
         raise ValueError("User does not exist")
 
+def getName(name):
+    userList = User.objects.filter(username=name)
+    if len(userList) == 1:
+        return userList[0]
+    else:
+        raise ValueError("User does not exist")
+
 def createFolder(id,name):
     user = get(id)
     folder = Folder(name=name)

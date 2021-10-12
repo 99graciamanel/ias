@@ -1,7 +1,7 @@
 {% extends 'frontend/base.html' %}
 {% block content %}
 
-<h4>Share folder {{ folder.name }}</h4>
+<h4>Edit permissions of {{ user.user.name }} in {{ folder.name }}</h4>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -12,13 +12,10 @@
  </script>
 
 
-<form method="POST" action="/backend/folder/share" class="col s12">{% csrf_token %}
+<form method="POST" action="/backend/folder/editshare" class="col s12">{% csrf_token %}
     <div class="row">
         <input name="idFolder" value={{ folder.id }} type="hidden"/>
-        <div class="input-field col s6">
-            <input placeholder="Username" name="username" id="name" type="text">
-            <label for="name">Username</label>
-        </div>
+        <input name="idUserFolder" value={{ user.id }} type="hidden"/>
         <div class="input-field col s6">
             <select name="role">
               <option value="" disabled selected>Role</option>

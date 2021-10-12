@@ -12,4 +12,5 @@ urlpatterns = [
     path('editFile', login_required(views.editFile)),
     path('shareFolder', login_required(views.shareFolder)),
     path('shareUser', login_required(views.shareUser)),
+    path('editShareUser', login_required(views.editShareUser)),   
 ]

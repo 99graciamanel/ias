@@ -7,6 +7,8 @@ from backend.dbutils import userdb
 from backend.dbutils import filedb
 from django.http import FileResponse
 
+from backend.dbutils import userinfolderdb
+
 def addFolder(request):
     id = request.user.id
     name = request.POST['name']
@@ -33,20 +35,56 @@ def editFolder(request):
     return Http404()
 
 def shareFolder(request):
+    id = request.user.id
     role = 2
-    idFolder = request.POST['id']
-    nameFolder = request.POST['name']
+    idFolder = request.POST['idFolder']
+    roleFolder = request.POST['role']
+    username = request.POST['username']
     role = userdb.getFolderRole(id,idFolder)
+    if username == request.user.username:
+        return HttpResponse('Invalid user id')
+    if roleFolder != '1' and roleFolder != '2':
+        return HttpResponse('Invalid Role')
     if role == 0:
-        folderdb.edit(idFolder,nameFolder)
+        userinfolderdb.add(username,idFolder,roleFolder)
         return HttpResponseRedirect('/')
-    return HttpResponse('Test')
+    return HttpResponse('Invalid Permission')
 
 def unshareFolder(request):
-    return HttpResponse('Test')
+    id = request.user.id
+    role = 2
+    idFolder = request.POST['idFolder']
+    idUserFolder = request.POST['idUserFolder']
+    folder = folderdb.get(idFolder)
+    userFolder = userinfolderdb.get(idUserFolder)
+    if userFolder.user.id == id:
+        return HttpResponse('Invalid user id')
+    if userFolder.folder.id != folder.id:
+        return HttpResponse('Invalid folder id')
+    role = userdb.getFolderRole(id,idFolder)
+    if role == 0:
+        userinfolderdb.delete(userFolder.id)
+        return HttpResponseRedirect('/')
+    return HttpResponse('Invalid role')
 
 def editshareFolder(request):
-    return HttpResponse('Test')
+    id = request.user.id
+    idFolder = request.POST['idFolder']
+    role = userdb.getFolderRole(id,idFolder)
+    roleFolder = request.POST['role']
+    idUserFolder = request.POST['idUserFolder']
+    folder = folderdb.get(idFolder)
+    userFolder = userinfolderdb.get(idUserFolder)
+    if userFolder.user.id == id:
+        return HttpResponse('Invalid user id')
+    if userFolder.folder.id != folder.id:
+        return HttpResponse('Invalid folder id')
+    if roleFolder != '1' and roleFolder != '2':
+        return HttpResponse('Invalid Role')
+    if role == 0:
+        userinfolderdb.changeRole(idUserFolder,roleFolder)
+        return HttpResponseRedirect('/')
+    return HttpResponse('Invalid Permission')
 
 def addFile(request):
     id = request.user.id
