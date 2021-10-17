@@ -15,13 +15,13 @@ def keycloak_logout(request):
     logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT + "?redirect_uri=" + \
                       request.build_absolute_uri(settings.LOGOUT_REDIRECT_URL)
     logger.warning(logout_endpoint)
-    return logout_endpoint + "?redirect_uri=" + \
-           request.build_absolute_uri(settings.LOGOUT_REDIRECT_URL)
+    return HttpResponseRedirect(logout_endpoint)
 
 
 class LogoutView(OIDCLogoutView):
     """ Extend standard logout view to include get method (called from URL)
     """
+
     def get(self, request):
         logger.warning("h")
         logger.warning("h")
