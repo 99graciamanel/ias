@@ -66,8 +66,8 @@ services:
             #JDBC_PARAMS: "connectTimeout=30000"
         networks:
             - web-internal
-        ports:
-            - 8080:8080
+        expose:
+            - 8080
         depends_on:
             - mysql
 volumes: 

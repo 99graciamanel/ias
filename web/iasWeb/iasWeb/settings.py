@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a+(vy!(c(bo3m0ll9og4^f+0u84+$nx&^r9-j5na(7751)r_6&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["django"] #["django", "keycloak"]
 
 MEDIA_ROOT = 'files'
 
@@ -33,20 +33,20 @@ OIDC_RP_SIGN_ALGO = "RS256"
 OIDC_RP_IDP_SIGN_KEY = """-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoptT3QonwbDUxzj+/pAk7JGBPq55cgOelTsZ82aUrWxJbIPhCW6vqCfXFkahpDd2PYQbmz6CJwtRJjzBoTWW7tjukgYVur3zIHRyKm/GUaE9/zRPqTCLY4IOyFWgfxkeNt8JtREHTB9D2BvrNxUEatTxleskgK8w/HT85lO2nbSgN7fFvABpdXBDMBInWnMlzfyOMuODslXKa1K87coJDgWFil7CAmrlGSbTfma8CZL2GimDqUcWi4RjGbahZJ7Bb/xXgj2T2hw0KzI6afJXYGvVUrG+m8RYrZKAWZQz3XjwzPmqH/x6INdEzEf0U9CYzAQF9PVfcZaT4++q7gB3hQIDAQAB
 -----END PUBLIC KEY-----"""
-OIDC_OP_JWKS_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/certs"
+OIDC_OP_JWKS_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/certs"
 
 OIDC_RP_CLIENT_ID = "django"
 OIDC_RP_CLIENT_SECRET = "1e236955-34a7-41d6-af06-af155d5fe251"
 
-OIDC_OP_AUTHORIZATION_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/auth"
-OIDC_OP_TOKEN_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/token"
-OIDC_OP_USER_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/userinfo"
+OIDC_OP_AUTHORIZATION_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/userinfo"
 
 OIDC_OP_LOGOUT_URL_METHOD = "iasWeb.views.openid.keycloak_logout"
-OIDC_OP_LOGOUT_ENDPOINT = "http://keycloak:8080/auth/realms/ias/protocol/openid-connect/logout"
-LOGIN_REDIRECT_URL = "https://localhost"
-LOGOUT_REDIRECT_URL = "https://localhost"
-LOGIN_URL = 'https://localhost/oidc/authenticate'
+OIDC_OP_LOGOUT_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/logout"
+LOGIN_REDIRECT_URL = "https://django"
+LOGOUT_REDIRECT_URL = "https://django"
+LOGIN_URL = 'https://django/oidc/authenticate'
 # Application definition
 
 INSTALLED_APPS = [
