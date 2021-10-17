@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
-from iasWeb.openid import LogoutView
+from django.contrib.auth.decorators import login_required
+from . import views
 
 urlpatterns = [
-    path('oidc/logout/', LogoutView.as_view(), name = "keycloak_logout"),
+    path('oidc/logout/', login_required(views.keycloak_logout), name="keycloak_logout"),
     path('oidc/', include('mozilla_django_oidc.urls')),
     path('admin/', admin.site.urls),
     path('backend/', include('backend.urls')),

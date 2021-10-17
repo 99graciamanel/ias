@@ -25,14 +25,14 @@ services:
         volumes:
             - db-web-data:/var/lib/postgresql/data/
         ports:
-            - "5432:5432"
+            - 5432:5432
         networks:
             - web-internal
     nginx:
         build: ./nginx
         ports:
-            - 80:8080
-            - 443:4343
+            - 80:80
+            - 443:443
         networks:
             - web-internal
         depends_on:
@@ -48,7 +48,7 @@ services:
             MYSQL_USER: keycloak
             MYSQL_PASSWORD: password
         ports:
-            - "3306:3306"
+            - 3306:3306
         networks:
             - web-internal
     keycloak:
