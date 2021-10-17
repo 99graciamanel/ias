@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a+(vy!(c(bo3m0ll9og4^f+0u84+$nx&^r9-j5na(7751)r_6&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["django"] #["django", "keycloak"]
+ALLOWED_HOSTS = ["django"] #["localhost", "keycloak"]
 
 MEDIA_ROOT = 'files'
 
