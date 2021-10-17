@@ -1,20 +1,15 @@
 version: "3.9"
 services:
-    mysql:
-        image: mysql:5.7
-        volumes:
-            - ./:/docker-entrypoint-initdb.d
-            - mysql_data:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: keycloak
-            MYSQL_USER: keycloak
-            MYSQL_PASSWORD: password
-        ports:
-            - 3306:3306
-        networks:
-            - web-internal
     keycloak:
+        build: ../nginx/nginx-keycloak
+        ports:
+            - 80:80
+            - 443:443
+        networks:
+            - nginx-keycloak
+        depends_on:
+            - keycloak-app
+    keycloak-app:
         image: quay.io/keycloak/keycloak:latest
         environment:
             DB_VENDOR: MYSQL
@@ -24,19 +19,36 @@ services:
             DB_PASSWORD: password
             KEYCLOAK_USER: admin
             KEYCLOAK_PASSWORD: admin
+            PROXY_ADDRESS_FORWARDING: 'true'
             #KEYCLOAK_LOGLEVEL: DEBUG
             # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the MySQL JDBC driver documentation in order to use it.
             #JDBC_PARAMS: "connectTimeout=30000"
         networks:
-            - web-internal
-        ports:
-            - 8080:8080
+            - keycloak-internal
+            - nginx-keycloak
+        expose:
+            - 8080
         depends_on:
             - mysql
+    mysql:
+        image: mysql:5.7
+        volumes:
+            - ./keycloak:/docker-entrypoint-initdb.d
+            - mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: keycloak
+            MYSQL_USER: keycloak
+            MYSQL_PASSWORD: password
+        ports:
+            - 3306:3306
+        networks:
+            - keycloak-internal
 volumes: 
+    db-web-data:
     mysql_data:
         driver: local
 
 networks:
-    web-internal:
-        name: web-internal
+    keycloak-internal:
+    nginx-keycloak:
