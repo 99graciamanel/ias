@@ -47,7 +47,7 @@ def shareFolder(request):
         return HttpResponse('Invalid Role')
     if role == 0:
         userinfolderdb.add(username,idFolder,roleFolder)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/shareFolder?id={}'.format(idFolder))
     return HttpResponse('Invalid Permission')
 
 def unshareFolder(request):
@@ -64,7 +64,7 @@ def unshareFolder(request):
     role = userdb.getFolderRole(id,idFolder)
     if role == 0:
         userinfolderdb.delete(userFolder.id)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/shareFolder?id={}'.format(idFolder))
     return HttpResponse('Invalid role')
 
 def editshareFolder(request):
@@ -83,7 +83,7 @@ def editshareFolder(request):
         return HttpResponse('Invalid Role')
     if role == 0:
         userinfolderdb.changeRole(idUserFolder,roleFolder)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/shareFolder?id={}'.format(idFolder))
     return HttpResponse('Invalid Permission')
 
 def addFile(request):
@@ -96,7 +96,7 @@ def addFile(request):
     fileDB = folderdb.addFile(idFolder,file.name)
     fs = FileSystemStorage()
     fs.save(fileDB.path, file)
-    return HttpResponse(fileDB.path)
+    return HttpResponseRedirect('/viewFolder?id={}'.format(idFolder))
 
 def getFile(request):
     id = request.user.id
@@ -120,7 +120,7 @@ def deleteFile(request):
     fs = FileSystemStorage()
     fs.delete(file.path)
     filedb.delete(idFile)
-    return HttpResponse(file.path)
+    return HttpResponseRedirect('/viewFolder?id={}'.format(idFolder))
 
 def editFile(request):
     id = request.user.id
@@ -134,4 +134,4 @@ def editFile(request):
     fs.delete(fileDB.path)
     fileDB = filedb.edit(idFile,file.name)
     fs.save(fileDB.path, file)
-    return HttpResponse(fileDB.path)
+    return HttpResponseRedirect('/viewFolder?id={}'.format(idFolder))

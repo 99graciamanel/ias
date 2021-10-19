@@ -9,8 +9,9 @@ def get(id):
 
 def add(name):
     file = File(name=name)
+
     file.save()
-    file.path = str(file.id)+name
+    file.path = str(file.id)
     file.save()
     return file
 
@@ -25,7 +26,7 @@ def edit(id,name):
     fileList = File.objects.filter(id=id)
     if len(fileList) == 1:
         fileList[0].name = name
-        fileList[0].path = str(fileList[0].id)+name
+        fileList[0].path = str(fileList[0].id)
         fileList[0].save()
         return fileList[0]
     else:

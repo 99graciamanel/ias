@@ -1,7 +1,7 @@
 {% extends 'frontend/base.html' %}
 {% block content %}
 
-<h4>Edit permissions of {{ user.user.name }} in {{ folder.name }}</h4>
+<h4>Edit permissions of {{ userF.user.name }} in {{ folder.name }}</h4>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -15,8 +15,8 @@
 <form method="POST" action="/backend/folder/editshare" class="col s12">{% csrf_token %}
     <div class="row">
         <input name="idFolder" value={{ folder.id }} type="hidden"/>
-        <input name="idUserFolder" value={{ user.id }} type="hidden"/>
-        <div class="input-field col s6">
+        <input name="idUserFolder" value={{ userF.id }} type="hidden"/>
+        <div class="input-field col s4">
             <select name="role">
               <option value="" disabled selected>Role</option>
               <option value="1">Editor</option>
@@ -24,9 +24,13 @@
             </select>
             <label>Role selection</label>
           </div>
-    </div>
-    <button class="btn waves-effect waves-light" type="submit" name="action">Create
+    <button class="btn waves-effect waves-light col s2" type="submit" name="action">Create
         <i class="material-icons right">send</i>
     </button>
 </form>
+<form method="GET" action="/shareFolder">
+  <input name="id" value={{ folder.id }} type="hidden"/>
+  <button type="submit" class="btn waves-effect waves-light offset-s1 col s2">Go Back</button>
+</form>
+</div>
 {% endblock content %}

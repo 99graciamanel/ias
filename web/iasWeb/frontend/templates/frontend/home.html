@@ -1,24 +1,10 @@
 {% extends 'frontend/base.html' %}
 {% block content %}
 
-{% if user.is_authenticated %}
-  <p>Current user:</p>
-  <p>{{ user }}</p>
-  <p>{{ user.family_name }}</p>
-  <p>{{ user.email }}</p>
-  <p>{{ user.preferred_username }}</p>
-  <form action="{% url 'oidc_logout' %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="logout">
-  </form>
-{% else %}
-  <a href="{% url 'oidc_authentication_init' %}">Login</a>
-{% endif %}
-
 <ul class="collection with-header">
-    <li class="collection-header">
+    <li class="collection-header row">
         <h4>Folders</h4>
-        <a href="newFolder" class="waves-effect waves-light btn"><i class="material-icons left">create_new_folder</i>New Folder</a>
+        <a href="newFolder" class="waves-effect waves-light btn col s2"><i class="material-icons left">create_new_folder</i>New Folder</a>
     </li>
     {% for folder in folders %}
     <li class="collection-item">

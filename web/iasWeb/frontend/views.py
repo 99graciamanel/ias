@@ -83,5 +83,5 @@ def editShareUser(request):
     role = userdb.getFolderRole(id,folderId)
     if role != 0:
         return Http404()
-    context = {'folder':folder,'user':uf}
+    context = {'folder':folder,'userF':uf}
     return render(request, 'frontend/editshareUser.html',context)
