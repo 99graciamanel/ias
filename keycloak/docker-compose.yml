@@ -33,7 +33,7 @@ services:
     mysql:
         image: mysql:5.7
         volumes:
-            - ./keycloak:/docker-entrypoint-initdb.d
+            - ./mysql:/docker-entrypoint-initdb.d
             - mysql_data:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
