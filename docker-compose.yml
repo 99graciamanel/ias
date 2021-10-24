@@ -11,7 +11,7 @@ services:
             - POSTGRES_HOST=db-web
             - POSTGRES_PORT=5432
             - DJANGO_SECRET_KEY=django-insecure-a+(vy!(c(bo3m0ll9og4^f+0u84+$nx&^r9-j5na(7751)r_6&
-            - OIDC_CLIENT_SECRET=1e236955-34a7-41d6-af06-af155d5fe251"
+            - OIDC_CLIENT_SECRET=1e236955-34a7-41d6-af06-af155d5fe251
         volumes:
             - ./web:/application
         networks:
