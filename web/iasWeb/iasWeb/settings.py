@@ -19,12 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a+(vy!(c(bo3m0ll9og4^f+0u84+$nx&^r9-j5na(7751)r_6&'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["django", "django"] #["localhost", "keycloak"]
+ALLOWED_HOSTS = ["django", "django"]
 
 MEDIA_ROOT = 'files'
 
@@ -35,7 +35,7 @@ MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoptT3QonwbDUxzj+/pAk7JGBPq55cgOelTsZ
 OIDC_OP_JWKS_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/certs"
 
 OIDC_RP_CLIENT_ID = "django"
-OIDC_RP_CLIENT_SECRET = "1e236955-34a7-41d6-af06-af155d5fe251"
+OIDC_RP_CLIENT_SECRET = os.environ.get('OIDC_CLIENT_SECRET')
 OIDC_VERIFY_SSL = False
 
 OIDC_OP_AUTHORIZATION_ENDPOINT = "https://keycloak/auth/realms/ias/protocol/openid-connect/auth"
