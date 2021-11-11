@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+    django-app:
+        build: web
+        expose:
+            - 80
+        environment:
+            - POSTGRES_USER=web_user
+            - POSTGRES_PASSWORD=GGjPs2Soo8@yk#M3
+            - POSTGRES_DB=web_db
+            - POSTGRES_HOST=db-web
+            - POSTGRES_PORT=5432
+            - DJANGO_SECRET_KEY=django-insecure-a+(vy!(c(bo3m0ll9og4^f+0u84+$nx&^r9-j5na(7751)r_6&
+            - OIDC_CLIENT_SECRET=3b4c1f2b-b2d5-4442-948e-fc9c686162db
+        volumes:
+            - ./web:/application
+        networks:
+            - django-internal
+            - nginx-django
+        depends_on:
+            - db-web
+    db-web:
+        image: "postgres:latest"
+        environment:
+            - POSTGRES_USER=web_user
+            - POSTGRES_PASSWORD=GGjPs2Soo8@yk#M3
+            - POSTGRES_DB=web_db
+        volumes:
+            - db-web-data:/var/lib/postgresql/data/
+        ports:
+            - 5432:5432
+        networks:
+            - django-internal
+    django:
+        build: nginx-django
+        ports:
+            - 80:80
+            - 443:443
+        networks:
+            - nginx-django
+        depends_on:
+            - django-app
+volumes: 
+    db-web-data:
+    mysql_data:
+        driver: local
+
+networks:
+    django-internal:
+    nginx-django:

@@ -1,0 +1,43 @@
+{% extends 'frontend/base.html' %}
+{% block content %}
+
+<ul class="collection with-header">
+    <li class="collection-header row">
+        <h4>Folders</h4>
+        <a href="newFolder" class="waves-effect waves-light btn col s2"><i class="material-icons left">create_new_folder</i>New Folder</a>
+    </li>
+    {% for folder in folders %}
+    <li class="collection-item">
+        <div>
+            {{ folder.folder.name }}
+            {% if folder.role == 0 %}
+            <form method="GET" action="editFolder" id="editForm{{ folder.folder.id }}" class="secondary-content">
+                <input name="id" value={{ folder.folder.id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('editForm{{ folder.folder.id }}').submit();">
+                <i class="material-icons">edit</i>
+                </a>
+            </form>
+            <form method="GET" action="shareFolder" id="shareForm{{ folder.folder.id }}" class="secondary-content">
+                <input name="id" value={{ folder.folder.id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('shareForm{{ folder.folder.id }}').submit();">
+                <i class="material-icons">person</i>
+                </a>
+            </form>
+            <form method="POST" action="/backend/folder/delete" id="deleteForm{{ folder.folder.id }}" class="secondary-content">{% csrf_token %}
+                <input name="id" value={{ folder.folder.id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('deleteForm{{ folder.folder.id }}').submit();">
+                <i class="material-icons">delete</i>
+                </a>
+            </form>
+            {% endif %}
+            <form method="GET" action="viewFolder" id="forwardForm{{ folder.folder.id }}" class="secondary-content">
+                <input name="id" value={{ folder.folder.id }} type="hidden"/>
+                <a class="secondary-content" href="javascript:{}" onclick="document.getElementById('forwardForm{{ folder.folder.id }}').submit();">
+                <i class="material-icons">pageview</i>
+                </a>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
