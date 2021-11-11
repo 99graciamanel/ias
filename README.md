@@ -14,5 +14,24 @@ For the one running django:
 'Ip of keycloak machine'    keycloak
 127.0.1.1       django
 
+
+## Project structure
+
+The project is divided into 3 folders:
+* **certs**: contains the Certificate Authority (CA) and webserver (keycloak and nginx) certificates.
+* **django**: contains all the configuration related to django as well as the nginx for django.
+* **keycloak**: contains all the configuration related to keycloak as well as the keycloak for django.
+
 ## Running the dockers
 
+In order to execute the django docker:
+```
+cd django
+sudo docker-compose up
+```
+
+In order to execute the keycloak docker:
+```
+cd keycloak
+sudo docker-compose up --build
+```
