@@ -20,7 +20,7 @@ For the one running django:
 The project is divided into 3 folders:
 * **certs**: contains the Certificate Authority (CA) and webserver (keycloak and nginx) certificates.
 * **django**: contains all the configuration related to django as well as the nginx for django.
-* **keycloak**: contains all the configuration related to keycloak as well as the keycloak for django.
+* **keycloak**: contains all the configuration related to keycloak as well as the nginx for keycloak.
 
 ## Running the dockers
 
